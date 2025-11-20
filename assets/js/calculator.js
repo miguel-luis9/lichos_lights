@@ -22,43 +22,21 @@ document.addEventListener('DOMContentLoaded', function() {
         const propertyType = document.getElementById('property-type').value;
         const linearFeet = parseFloat(document.getElementById('linear-feet').value) || 0;
         const complexity = document.getElementById('complexity').value;
-        const featureTrees = document.getElementById('feature-trees').checked;
-        const featureAnimated = document.getElementById('feature-animated').checked;
-        const featureTakedown = document.getElementById('feature-takedown').checked;
 
         // Base pricing (per linear foot)
-        let basePricePerFoot = propertyType === 'commercial' ? 8 : 6;
+        let basePricePerFoot = propertyType === 'commercial' ? 10 : 7;
         
         // Complexity multipliers
         const complexityMultipliers = {
             'simple': 1.0,
-            'moderate': 1.3,
-            'complex': 1.7
+            'moderate': 1.2,
+            'complex': 1.5
         };
         
         const complexityMultiplier = complexityMultipliers[complexity] || 1.0;
 
         // Calculate base cost
         let totalCost = linearFeet * basePricePerFoot * complexityMultiplier;
-
-        // Add minimum base fee
-        const minimumBase = propertyType === 'commercial' ? 500 : 300;
-        if (totalCost < minimumBase) {
-            totalCost = minimumBase;
-        }
-
-        // Additional features
-        if (featureTrees) {
-            totalCost += propertyType === 'commercial' ? 150 : 100;
-        }
-        
-        if (featureAnimated) {
-            totalCost += propertyType === 'commercial' ? 800 : 500;
-        }
-        
-        if (featureTakedown) {
-            totalCost += totalCost * 0.3; // 30% of installation cost
-        }
 
         // Round to nearest dollar
         totalCost = Math.round(totalCost);
